@@ -15,17 +15,7 @@ const fakeAnswersRepository: AnswersRepository = {
 test('create an answer: ', () => {
   const answerQuestion = new AnswerQuestionsUseCase(fakeAnswersRepository)
 
-  const instructor = new Instructor({ name: 'Jorge' });
-  const student = new Student({ name: 'Julia' });
-
-  const question = new Question({
-    title: 'Primeira Dúvida',
-    content: 'Deu pau',
-    authorId: student.id,
-    slug: Slug.createContext('Test tes')
-  });
-
-  const answer = answerQuestion.execute({ content: 'teste', instructorId: instructor.id, questionId: question.id });
+  const answer = answerQuestion.execute({ content: 'teste', instructorId: '1', questionId: '2' });
 
   expect(answer).toBeTruthy()
 })
