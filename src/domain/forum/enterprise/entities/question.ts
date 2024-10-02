@@ -1,79 +1,79 @@
-import { Slug } from './value-object/slug'
-import { Entity } from '@/core/entities/entity'
-import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { Optional } from '@/core/types/optional'
-import dayjs from 'dayjs'
+import { Slug } from "./value-object/slug";
+import { Entity } from "@/core/entities/entity";
+import { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import { Optional } from "@/core/types/optional";
+import dayjs from "dayjs";
 
 interface QuestionProps {
-  authorId: UniqueEntityId
-  bestAnswerId?: UniqueEntityId
-  title: string
-  slug: Slug
-  content: string
-  createdAt: Date
-  updatedAt?: Date
+  authorId: UniqueEntityId;
+  bestAnswerId?: UniqueEntityId;
+  title: string;
+  slug: Slug;
+  content: string;
+  createdAt: Date;
+  updatedAt?: Date;
 }
 
 export class Question extends Entity<QuestionProps> {
   get authorId() {
-    return this.props.authorId
+    return this.props.authorId;
   }
 
   get bestAnswerId() {
-    return this.props.bestAnswerId
+    return this.props.bestAnswerId;
   }
 
   get title() {
-    return this.props.title
+    return this.props.title;
   }
 
   get content() {
-    return this.props.content
+    return this.props.content;
   }
 
   get createdAt() {
-    return this.props.createdAt
+    return this.props.createdAt;
   }
 
   get updatedAt() {
-    return this.props.updatedAt
+    return this.props.updatedAt;
   }
 
   get isNew(): boolean {
-    return dayjs().diff(this.props.createdAt) <= 3
+    return dayjs().diff(this.props.createdAt) <= 3;
   }
 
   get excerpt() {
-    return this.content.substring(0, 120).trimEnd().concat('...')
+    return this.content.substring(0, 120).trimEnd().concat("...");
   }
 
   private touch() {
-    this.props.updatedAt = new Date()
+    this.props.updatedAt = new Date();
   }
 
   set title(title: string) {
-    this.props.title = title
-    this.props.slug = Slug.createContext(title)
-    this.touch()
+    this.props.title = title;
+    this.props.slug = Slug.createContext(title);
+    this.touch();
   }
 
   set content(content: string) {
-    this.props.content = content
-    this.touch()
+    this.props.content = content;
+    this.touch();
   }
 
   set bestAnswerId(bestAnswerId: UniqueEntityId | undefined) {
-    this.props.bestAnswerId = bestAnswerId
-    this.touch()
+    this.props.bestAnswerId = bestAnswerId;
+    this.touch();
   }
 
-  static create(props: Optional<QuestionProps, 'createdAt' | 'slug'>) {
+  static create(props: Optional<QuestionProps, "createdAt" | "slug">) {
     const question = new Question({
       ...props,
       slug: props.slug ?? Slug.createContext(props.title),
       createdAt: new Date(),
-    })
+    });
 
-    return question
+    return question;
   }
 }
