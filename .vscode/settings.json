@@ -1,0 +1,29 @@
+{
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.rulers": [
+      {
+        "column": 90,
+        "color": "#ea922d"
+      }
+    ]
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.rulers": [
+      {
+        "column": 90,
+        "color": "#ea922d"
+      }
+    ]
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.rulers": [
+      {
+        "column": 90,
+        "color": "#ea922d"
+      }
+    ]
+  },
+}
