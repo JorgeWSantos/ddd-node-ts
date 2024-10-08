@@ -2,7 +2,7 @@ import { Entity } from "@/core/entities/entity";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Optional } from "@/core/types/optional";
 
-interface AnswerProps {
+export interface AnswerProps {
   questionId: UniqueEntityId;
   authorId: UniqueEntityId;
   content: string;
@@ -44,11 +44,17 @@ export class Answer extends Entity<AnswerProps> {
     this.touch();
   }
 
-  static create(props: Optional<AnswerProps, "createdAt">) {
-    const answer = new Answer({
-      ...props,
-      createdAt: new Date(),
-    });
+  static create(
+    props: Optional<AnswerProps, "createdAt">,
+    id?: UniqueEntityId,
+  ) {
+    const answer = new Answer(
+      {
+        ...props,
+        createdAt: new Date(),
+      },
+      id,
+    );
 
     return answer;
   }
