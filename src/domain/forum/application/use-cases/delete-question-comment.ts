@@ -1,7 +1,4 @@
-import { questionCommentsRepository } from "@/domain/forum/application/repositories/question-repository";
-import { QuestionComment } from "../../enterprise/entities/question-comment";
 import { QuestionCommentsRepository } from "../repositories/question-comments-repository";
-import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
 interface DeleteQuestionCommentUseCaseRequest {
   authorId: string;
