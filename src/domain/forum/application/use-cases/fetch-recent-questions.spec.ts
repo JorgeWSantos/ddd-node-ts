@@ -1,13 +1,19 @@
 import { InMemoryQuestionRepository } from "@/test/repositories/in-memory-question-repository";
 import { makeQuestion } from "@/test/factories/make-question";
 import { FetchRecentQuestionsUseCase } from "./fetch-recent-questions";
+import { InMemoryQuestionAttachmentsRepository } from "@/test/repositories/in-memory-question-attachments-repository";
 
+let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository;
 let inMemoryQuestionRepository: InMemoryQuestionRepository;
 let sut: FetchRecentQuestionsUseCase;
 
 describe("Fetch Recent Questions: ", () => {
   beforeEach(() => {
-    inMemoryQuestionRepository = new InMemoryQuestionRepository();
+    inMemoryQuestionAttachmentsRepository =
+      new InMemoryQuestionAttachmentsRepository();
+    inMemoryQuestionRepository = new InMemoryQuestionRepository(
+      inMemoryQuestionAttachmentsRepository,
+    );
     sut = new FetchRecentQuestionsUseCase(inMemoryQuestionRepository);
   });
 

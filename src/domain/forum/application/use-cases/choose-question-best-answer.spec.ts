@@ -5,15 +5,29 @@ import { makeAnswer } from "@/test/factories/make-answer";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { makeQuestion } from "@/test/factories/make-question";
 import { NotAllowedError } from "./error/not-allowed-error";
+import { InMemoryAnswerAttachmentsRepository } from "@/test/repositories/in-memory-answer-attachments-repository";
+import { InMemoryQuestionAttachmentsRepository } from "@/test/repositories/in-memory-question-attachments-repository";
 
+let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository;
 let inMemoryAnswerRepository: InMemoryAnswerRepository;
 let inMemoryQuestionRepository: InMemoryQuestionRepository;
+let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository;
 let sut: ChooseQuestionBestAnswerUseCase;
 
 describe("Choose Question Best Answer: ", () => {
   beforeEach(() => {
-    inMemoryAnswerRepository = new InMemoryAnswerRepository();
-    inMemoryQuestionRepository = new InMemoryQuestionRepository();
+    inMemoryAnswerAttachmentsRepository =
+      new InMemoryAnswerAttachmentsRepository();
+    inMemoryAnswerRepository = new InMemoryAnswerRepository(
+      inMemoryAnswerAttachmentsRepository,
+    );
+
+    inMemoryQuestionAttachmentsRepository =
+      new InMemoryQuestionAttachmentsRepository();
+    inMemoryQuestionRepository = new InMemoryQuestionRepository(
+      inMemoryQuestionAttachmentsRepository,
+    );
+
     sut = new ChooseQuestionBestAnswerUseCase(
       inMemoryQuestionRepository,
       inMemoryAnswerRepository,
@@ -40,8 +54,10 @@ describe("Choose Question Best Answer: ", () => {
     });
 
     expect(result.isRight()).toBe(true);
-    expect(result.value?.question).toMatchObject({
-      bestAnswerId: newAnswer.id,
+    expect(result.value).toMatchObject({
+      question: expect.objectContaining({
+        bestAnswerId: newAnswer.id,
+      }),
     });
   });
 

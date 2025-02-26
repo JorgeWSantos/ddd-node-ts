@@ -3,7 +3,7 @@
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.rulers": [
       {
-        "column": 90,
+        "column": 70,
         "color": "#ea922d"
       }
     ]
@@ -12,7 +12,7 @@
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.rulers": [
       {
-        "column": 90,
+        "column": 70,
         "color": "#ea922d"
       }
     ]
@@ -21,7 +21,7 @@
     "editor.defaultFormatter": "vscode.typescript-language-features",
     "editor.rulers": [
       {
-        "column": 90,
+        "column": 70,
         "color": "#ea922d"
       }
     ]
