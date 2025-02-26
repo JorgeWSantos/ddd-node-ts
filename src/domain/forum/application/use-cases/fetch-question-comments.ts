@@ -1,17 +1,20 @@
+import { Either, right } from "@/core/either";
 import { QuestionComment } from "../../enterprise/entities/question-comment";
 import { QuestionCommentsRepository } from "../repositories/question-comments-repository";
+import { r } from "@faker-js/faker/dist/airline-C5Qwd7_q";
 
 interface FetchQuestionCommentsUseCaseRequest {
   questionId: string;
   page: number;
 }
 
-interface FetchQuestionCommentsUseCaseResponse {
-  questionComments: QuestionComment[];
-}
+type FetchQuestionCommentsUseCaseResponse = Either<
+  null,
+  { questionComments: QuestionComment[] }
+>;
 
 export class FetchQuestionCommentsUseCase {
-  constructor(private questionCommentsRepository: QuestionCommentsRepository) {}
+  constructor(private questionCommentsRepository: QuestionCommentsRepository) { }
 
   async execute({
     questionId,
@@ -22,8 +25,6 @@ export class FetchQuestionCommentsUseCase {
         page,
       });
 
-    return {
-      questionComments,
-    };
+    return right({ questionComments });
   }
 }

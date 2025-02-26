@@ -19,10 +19,12 @@ describe("Get Question By Slug: ", () => {
 
     inMemoryQuestionRepository.create(newQuestion);
 
-    const { question } = await sut.execute({
+    const result = await sut.execute({
       slug: "teste-de-question",
     });
 
-    expect(newQuestion.id.toValue()).toEqual(question.id.toValue());
+    expect(newQuestion.id.toValue()).toEqual(
+      result.value?.question.id.toValue(),
+    );
   });
 });

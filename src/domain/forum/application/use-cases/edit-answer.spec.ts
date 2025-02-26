@@ -2,6 +2,7 @@ import { makeAnswer } from "@/test/factories/make-answer";
 import { EditAnswerUseCase } from "./edit-answer";
 import { InMemoryAnswerRepository } from "@/test/repositories/in-memory-answer-repository";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import { NotAllowedError } from "./error/not-allowed-error";
 
 let inMemoryAnswerRepository: InMemoryAnswerRepository;
 let sut: EditAnswerUseCase;
@@ -20,14 +21,14 @@ describe("Edit Answer: ", () => {
 
     await inMemoryAnswerRepository.create(newAnswer);
 
-    const { answer } = await sut.execute({
+    const result = await sut.execute({
       answerId: newAnswer.id.toString(),
       authorId: "author-1",
       content: "content-changed",
     });
 
-    expect(answer.content).toEqual("content-changed");
-    expect(answer).toMatchObject({
+    expect(result.value?.answer.content).toEqual("content-changed");
+    expect(result.value?.answer).toMatchObject({
       content: "content-changed",
     });
     expect(inMemoryAnswerRepository.items).toHaveLength(1);
@@ -41,12 +42,13 @@ describe("Edit Answer: ", () => {
 
     await inMemoryAnswerRepository.create(answer);
 
-    expect(() =>
-      sut.execute({
-        answerId: "answer-1",
-        authorId: "author-non-authorized",
-        content: "content-changed",
-      }),
-    ).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      answerId: "answer-1",
+      authorId: "author-non-authorized",
+      content: "content-changed",
+    });
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBeInstanceOf(NotAllowedError);
   });
 });
