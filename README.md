@@ -1,0 +1,4 @@
+#Conceitos
+
+- Aggregate
+- WatchedList
