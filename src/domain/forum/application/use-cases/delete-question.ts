@@ -1,6 +1,6 @@
 import { QuestionRepository } from "@/domain/forum/application/repositories/question-repository";
-import { ResourceNotFoundError } from "./error/resource-not-found-error";
-import { NotAllowedError } from "./error/not-allowed-error";
+import { ResourceNotFoundError } from "@/core/errors/error/resource-not-found-error";
+import { NotAllowedError } from "@/core/errors/error/not-allowed-error";
 import { Either, left, right } from "@/core/either";
 
 interface DeleteQuestionUseCaseRequest {

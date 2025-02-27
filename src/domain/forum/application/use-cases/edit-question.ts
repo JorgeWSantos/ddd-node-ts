@@ -1,8 +1,8 @@
 import { QuestionRepository } from "@/domain/forum/application/repositories/question-repository";
 import { Question } from "../../enterprise/entities/question";
 import { Either, left, right } from "@/core/either";
-import { ResourceNotFoundError } from "./error/resource-not-found-error";
-import { NotAllowedError } from "./error/not-allowed-error";
+import { ResourceNotFoundError } from "@/core/errors/error/resource-not-found-error";
+import { NotAllowedError } from "@/core/errors/error/not-allowed-error";
 import { QuestionAttachmentsRepository } from "../repositories/question-attachments-repository";
 import { QuestionAttachmentList } from "../../enterprise/entities/question-attachment-list";
 import { QuestionAttachment } from "../../enterprise/entities/question-attachment";

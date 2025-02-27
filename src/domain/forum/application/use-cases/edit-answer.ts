@@ -1,7 +1,7 @@
 import { AnswerRepository } from "@/domain/forum/application/repositories/answer-repository";
 import { Answer } from "../../enterprise/entities/answer";
-import { ResourceNotFoundError } from "./error/resource-not-found-error";
-import { NotAllowedError } from "./error/not-allowed-error";
+import { ResourceNotFoundError } from "@/core/errors/error/resource-not-found-error";
+import { NotAllowedError } from "@/core/errors/error/not-allowed-error";
 import { Either, left, right } from "@/core/either";
 import { AnswerAttachmentList } from "../../enterprise/entities/answer-attachment-list";
 import { AnswerAttachmentsRepository } from "../repositories/answer-attachments-repository";
