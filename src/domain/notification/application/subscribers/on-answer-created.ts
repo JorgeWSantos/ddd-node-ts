@@ -1,9 +1,14 @@
 import { DomainEvents } from "@/core/events/domain-events";
 import { EventHandler } from "@/core/events/event-handler";
+import { QuestionRepository } from "@/domain/forum/application/repositories/question-repository";
 import { AnswerCreatedEvent } from "@/domain/forum/enterprise/events/answer-created-events";
+import { SendNotificationUseCase } from "../use-cases/send-notification";
 
 export class OnAnswerCreated implements EventHandler {
-  constructor() {
+  constructor(
+    private questionRepository: QuestionRepository,
+    private sendNotification: SendNotificationUseCase,
+  ) {
     this.setupSubscriptions();
   }
 
@@ -16,5 +21,16 @@ export class OnAnswerCreated implements EventHandler {
 
   private async sendNewAnswerNotification({ answer }: AnswerCreatedEvent) {
     console.log("answer: ", answer);
+    const question = await this.questionRepository.findById(
+      answer.questionId.toString(),
+    );
+
+    if (question) {
+      await this.sendNotification.execute({
+        recipientId: question.authorId.toString(),
+        title: `Nova resposta em "${question.title.substring(0, 40).concat("...")}"`,
+        content: answer.excerpt,
+      });
+    }
   }
 }

@@ -27,7 +27,7 @@ let sendNotificationSpy: MockInstance<
   ) => Promise<SendNotificationUseCaseResponse>
 >;
 
-describe("On Answer created", () => {
+describe("On question best answer chosen", () => {
   beforeEach(() => {
     inMemoryQuestionAttachmentsRepository =
       new InMemoryQuestionAttachmentsRepository();
@@ -51,13 +51,17 @@ describe("On Answer created", () => {
     new OnAnswerCreated(inMemoryQuestionRepository, sendNotificationUseCase);
   });
 
-  it("should send a notification when an answer is created", async () => {
+  it("should send a notification when an question has new best answer", async () => {
     const question = makeQuestion();
 
     const answer = makeAnswer({ questionId: question.id });
 
     await inMemoryQuestionRepository.create(question);
     await inMemoryAnswerRepository.create(answer);
+
+    question.bestAnswerId = answer.id;
+
+    await inMemoryQuestionRepository.save(question);
 
     await waitFor(() => {
       expect(sendNotificationSpy).toHaveBeenCalled();
